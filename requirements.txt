@@ -1,0 +1,13 @@
+# ----------------------
+# Flask
+# ----------------------
+flask
+flask-restful
+flask-jwt
+
+# ----------------------
+# Production Server
+# ----------------------
+gevent
+gunicorn
+mongoengine
