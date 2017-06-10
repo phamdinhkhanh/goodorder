@@ -24,7 +24,7 @@ class OrderRes(Resource):
         order_item = []
         for item in items:
              print("1")
-             good_id = item["id"]
+        #    good_id = item["id"]
         #     count = item["count"]
         #     good = Good.objects().with_id(good_id)
         #     price = good.price
