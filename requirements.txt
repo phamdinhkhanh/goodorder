@@ -11,3 +11,10 @@ flask-jwt
 gevent
 gunicorn
 mongoengine
+
+
+# ----------------------
+# Other
+# ----------------------
+responses==0.3
+requests>=2.6.0

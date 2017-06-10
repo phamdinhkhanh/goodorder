@@ -35,7 +35,7 @@ class OrderRes(Resource):
                       totalspend = total_spend)
         order.save()
         add_order = Order.objects().with_id(order.id)
-        return mlab.item2json(order)
+        return mlab.item2json(add_order)
 
 
 
