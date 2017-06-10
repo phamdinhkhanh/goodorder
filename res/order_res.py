@@ -2,7 +2,7 @@ from flask_restful import Resource, reqparse
 from model.good import *
 from model.customer import Customer
 import mlab
-from model.order import Order
+from model.order import Order, SingleOrder
 
 
 class OrderRes(Resource):
@@ -21,17 +21,19 @@ class OrderRes(Resource):
         items = body["items"]
         user_id = body.user_id
         total_spend = 0
-
+        order_item = []
         for item in items:
             good_id = item["id"]
             count = item["count"]
-            price = Good.objects().with_id(good_id).price
+            good = Good.objects().with_id(good_id)
+            price = good.price
             print("good_id:", good_id,";count: ",count,"price: ",price)
             total_spend += price*count
-
+            singleOrder = SingleOrder(good = good, count = count)
+            order_item.append(singleOrder)
         customer = Customer.objects().with_id(user_id)
-
-        order = Order(items = items,customer = customer,
+        print("order_item0:",order_item[0],"order_item1:",order_item[1])
+        order = Order(items = order_item,customer = customer,
                       totalspend = total_spend)
         order.save()
         add_order = Order.objects().with_id(order.id)
