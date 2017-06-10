@@ -23,23 +23,24 @@ class OrderRes(Resource):
         total_spend = 0
         order_item = []
         for item in items:
-            good_id = item["id"]
-            count = item["count"]
-            good = Good.objects().with_id(good_id)
-            price = good.price
-            #print("good_id:", good_id,";count: ",count,"price: ",price)
-            total_spend += price*count
-            #singleOrder = SingleOrder(good = good, count = count)
-            #order_item.append(singleOrder)
-        #customer = Customer.objects().with_id(user_id)
-        #print(mlab.item2json(order_item[0]))
-        #print("order_item0:",mlab.item2json(order_item[0]),"order_item1:",order_item[1])
-        #order = Order(items = order_item,customer = customer,
-        #              totalspend = total_spend)
-        #order.save()
-        #add_order = Order.objects().with_id(order.id)
+             print("1")
+             good_id = item["id"]
+        #     count = item["count"]
+        #     good = Good.objects().with_id(good_id)
+        #     price = good.price
+        #     print("good_id:", good_id,";count: ",count,"price: ",price)
+        #     total_spend += price*count
+        #     singleOrder = SingleOrder(good = good, count = count)
+        #     order_item.append(singleOrder)
+        # customer = Customer.objects().with_id(user_id)
+        # print(mlab.item2json(order_item[0]))
+        # print("order_item0:",mlab.item2json(order_item[0]),"order_item1:",order_item[1])
+        # order = Order(items = order_item,customer = customer,
+        #               totalspend = total_spend)
+        # order.save()
+        # add_order = Order.objects().with_id(order.id)
         #return mlab.item2json(add_order)
-        return total_spend
+        return {"message":"ok"},200
 
 
 
