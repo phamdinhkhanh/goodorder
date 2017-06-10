@@ -9,8 +9,13 @@ from res.order_res import OrderRes
 mlab.connect()
 
 app = Flask(__name__)
+app.logger.debug('A value for debugging')
+app.logger.warning('A warning occurred (%d apples)', 42)
+app.logger.error('An error occurred')
+
 api = Api(app)
 jwt = jwt_init(app)
+
 
 api.add_resource(RegisterRes,"/api/register")
 api.add_resource(OrderRes, "/api/order")

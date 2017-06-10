@@ -32,7 +32,7 @@ class OrderRes(Resource):
             singleOrder = SingleOrder(good = good, count = count)
             order_item.append(singleOrder)
         customer = Customer.objects().with_id(user_id)
-        print("order_item0:",order_item[0],"order_item1:",order_item[1])
+        print("order_item0:",mlab.item2json(order_item[0]),"order_item1:",order_item[1])
         order = Order(items = order_item,customer = customer,
                       totalspend = total_spend)
         order.save()
