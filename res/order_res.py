@@ -5,7 +5,7 @@ import mlab
 from model.order import Order, SingleOrder
 
 parser = reqparse.RequestParser()
-parser.add_argument(name="items", type=list, location="json")
+parser.add_argument(name="items", type=list, location="json", action = "append")
 parser.add_argument(name="user_id", type=str, location="json")
 
 class OrderRes(Resource):
