@@ -22,8 +22,8 @@ class OrderRes(Resource):
         # user_id = body.user_id
         # total_spend = 0
         # order_item = []
-        # for item in items:
-        #    good_id = item["id"]
+        for item in items:
+            good_id = item["id"]
         #    count = item["count"]
         #    good = Good.objects().with_id(good_id)
         #    price = good.price
@@ -46,7 +46,7 @@ class OrderRes(Resource):
         #     else:
         #         if isinstance(items,tuple):
         #             type = "tuple"
-        return items
+        return good_id
 
 
 
