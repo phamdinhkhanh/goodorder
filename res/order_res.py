@@ -22,7 +22,7 @@ class OrderRes(Resource):
         user_id = body.user_id
         total_spend = 0
         order_item = []
-        print("hahaha")
+        print("items:", items)
         for item in items:
            print("item type:",type(item))
            print("item:", item)
