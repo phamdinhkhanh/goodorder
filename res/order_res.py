@@ -22,9 +22,10 @@ class OrderRes(Resource):
         user_id = body.user_id
         total_spend = 0
         order_item = []
-        print("hahhahaah")
+        print("hahaha")
         for item in items:
-           print(item)
+           print("item type:",type(item))
+           print("item:", item)
            good_id = item["id"]
            count = item["count"]
            good = Good.objects().with_id(good_id)
