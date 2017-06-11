@@ -14,8 +14,8 @@ class OrderRes(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument(name="items", type=list, location="json")
         parser.add_argument(name="user_id", type=str, location="json")
-        parser.add_argument(name="id", type=str, location="form")
-        parser.add_argument(name="count", type=int, location="form")
+        parser.add_argument(name="id", type=int, location="json")
+        parser.add_argument(name="count", type=int, location="json")
 
         body = parser.parse_args()
         items = body["items"]
