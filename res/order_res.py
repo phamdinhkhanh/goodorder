@@ -24,6 +24,7 @@ class OrderRes(Resource):
         total_spend = 0
         order_item = []
         print("items:", items)
+        print("user_id:", user_id)
         for item in items:
            print("item type:",type(item))
            print("item:", item)
