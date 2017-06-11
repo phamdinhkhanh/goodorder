@@ -4,6 +4,9 @@ from model.customer import Customer
 import mlab
 from model.order import Order, SingleOrder
 
+parser = reqparse.RequestParser()
+parser.add_argument(name="items", type=list, location="json")
+parser.add_argument(name="user_id", type=str, location="json")
 
 class OrderRes(Resource):
     def get(self):
@@ -11,9 +14,7 @@ class OrderRes(Resource):
         return mlab.list2json(orders)
 
     def post(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument(name="items", type=list, location="json")
-        parser.add_argument(name="user_id", type=str, location="json")
+
         #parser.add_argument(name="id", type= int, location="json")
         #parser.add_argument(name="count", type=int, location="json")
 
