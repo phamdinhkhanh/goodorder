@@ -22,6 +22,7 @@ class OrderRes(Resource):
         user_id = body.user_id
         total_spend = 0
         order_item = []
+        print("hahhahaah")
         for item in items:
            print(item)
            good_id = item["id"]
