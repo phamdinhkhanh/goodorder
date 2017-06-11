@@ -23,6 +23,7 @@ class OrderRes(Resource):
         user_id = body.user_id
         total_spend = 0
         order_item = []
+        print("body:", body)
         print("items:", items)
         print("user_id:", user_id)
         for item in items:
