@@ -23,14 +23,21 @@ class OrderRes(Resource):
         user_id = body.user_id
         total_spend = 0
         order_item = []
+        x= "hello world"
+        itemjsonfile = items[2:-2]
+
         print("body:", body)
         print("items:", items)
+        print("type itemjsonfile", type(itemjsonfile))
+        print("items[id]", items["id"])
+        print("itemjsonfile",mlab.item2json(itemjsonfile))
         print("user_id:", user_id)
-        for item in items:
-           print("item type:",type(item))
-           print("item:", item)
-           good_id = item["id"]
-           count = item["count"]
+        jsonitems = mlab.itemjson(items)
+        print("jsonitems:",jsonitems)
+        for item in jsonitems:
+           good_id = jsonitems["id"]
+           count = jsonitems["count"]
+           print(good_id, count)
            good = Good.objects().with_id(good_id)
            price = good.price
            print("good_id:", good_id,";count: ",count,"price: ",price)

@@ -21,3 +21,7 @@ def list2json(l):
 def item2json(item):
     import json
     return json.loads(item.to_json())
+
+def itemjson(item):
+    import json
+    return json.load(item)
