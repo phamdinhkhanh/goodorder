@@ -12,16 +12,16 @@ class OrderRes(Resource):
 
     def post(self):
         parser = reqparse.RequestParser()
-        parser.add_argument(name="items", type=list ,location = "json")
+        parser.add_argument(name="items", type=list ,location="json")
         parser.add_argument(name="user_id", type=str, location="json")
-        parser.add_argument(name="id", type=str, location="json")
-        parser.add_argument(name="count", type=int, location="json")
+        parser.add_argument(name="id", type=str, location="form")
+        parser.add_argument(name="count", type=int, location="form")
 
         body = parser.parse_args()
         items = body["items"]
-        user_id = body.user_id
-        total_spend = 0
-        order_item = []
+        # user_id = body.user_id
+        # total_spend = 0
+        # order_item = []
         # for item in items:
         #    good_id = item["id"]
         #    count = item["count"]
@@ -38,15 +38,15 @@ class OrderRes(Resource):
         #               totalspend = total_spend)
         # order.save()
         # add_order = Order.objects().with_id(order.id)
-        if isinstance(items,dict):
-          type = "dict"
-        else:
-            if isinstance(items,list):
-                type = "list"
-            else:
-                if isinstance(items,tuple):
-                    type = "tuple"
-        return type
+        # if isinstance(items,dict):
+        #   type = "dict"
+        # else:
+        #     if isinstance(items,list):
+        #         type = "list"
+        #     else:
+        #         if isinstance(items,tuple):
+        #             type = "tuple"
+        return items
 
 
 
