@@ -23,27 +23,24 @@ class OrderRes(Resource):
         user_id = body.user_id
         total_spend = 0
         order_item = []
-        x= "hello world"
-        itemjsonfile = items[2:-2]
-
         print("body:", body)
         print("items:", items)
-        print("type itemjsonfile", type(itemjsonfile))
-        print("items[id]", items["id"])
-        print("itemjsonfile",mlab.item2json(itemjsonfile))
         print("user_id:", user_id)
-        jsonitems = mlab.itemjson(items)
-        print("jsonitems:",jsonitems)
-        for item in jsonitems:
-           good_id = jsonitems["id"]
-           count = jsonitems["count"]
-           print(good_id, count)
-           good = Good.objects().with_id(good_id)
-           price = good.price
-           print("good_id:", good_id,";count: ",count,"price: ",price)
-           total_spend += price*count
-           singleOrder = SingleOrder(good = good, count = count)
-           order_item.append(singleOrder)
+        #convert list to string
+        str = ''.join(items)
+        #convert string to string acceptable list dict
+        json_act_str = str.replace("'","\"")
+        print("json_act_str", json_act_str)
+        list_dict = mlab.itemjson(json_act_str)
+        for i in range(0,len(list_dict)):
+            good_id = list_dict[i]["id"]
+            count = list_dict[i]["count"]
+            good = Good.objects().with_id(good_id)
+            price = good.price
+            #print("good_id:", good_id,";count: ",count,"price: ",price)
+            total_spend += price*count
+            singleOrder = SingleOrder(good = good, count = count)
+            order_item.append(singleOrder)
         customer = Customer.objects().with_id(user_id)
         #print(mlab.item2json(order_item[0]))
         #print("order_item0:",mlab.item2json(order_item[0]),"order_item1:",order_item[1])

@@ -24,4 +24,4 @@ def item2json(item):
 
 def itemjson(item):
     import json
-    return json.load(item)
+    return json.loads(item)
