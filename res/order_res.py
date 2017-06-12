@@ -15,10 +15,7 @@ class OrderRes(Resource):
         return mlab.list2json(orders)
 
     def post(self):
-
-        #parser.add_argument(name="id", type= int, location="json")
-        #parser.add_argument(name="count", type=int, location="json")
-
+        #Post trên server sẽ lấy đủ đơn hàng, post trên local sẽ thiếu đơn hàng
         body = parser.parse_args()
         items = body["items"]
         user_id = body.user_id
@@ -27,14 +24,16 @@ class OrderRes(Resource):
         dumps = json.dumps(items)
         ldumps = re.findall(r"[\w']+",dumps)
         print(len(items))
-        for i in range(0,len(items)):
-            good_id = ldumps[4*i+1][1:-1]
-            count = int(ldumps[4*i+3])
-            good = Good.objects().with_id(good_id)
-            price = good.price
-            total_spend += price*count
-            singleOrder = SingleOrder(good = good, count = count)
-            order_item.append(singleOrder)
+        for i in range(0,len(items)+1):
+            try:
+                good_id = ldumps[4*i+1][1:-1]
+                count = int(ldumps[4*i+3])
+                good = Good.objects().with_id(good_id)
+                price = good.price
+                total_spend += price*count
+                singleOrder = SingleOrder(good = good, count = count)
+                order_item.append(singleOrder)
+            except:print("Index error")
         print("order_item:",mlab.list2json(order_item))
         customer = Customer.objects().with_id(user_id)
         order = Order(items = order_item,customer = customer,
