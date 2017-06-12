@@ -27,7 +27,7 @@ class OrderRes(Resource):
         dumps = json.dumps(items)
         ldumps = re.findall(r"[\w']+",dumps)
         print(len(items))
-        for i in range(0,len(items)+1):
+        for i in range(0,len(items)):
             good_id = ldumps[4*i+1][1:-1]
             count = int(ldumps[4*i+3])
             good = Good.objects().with_id(good_id)
@@ -35,7 +35,7 @@ class OrderRes(Resource):
             total_spend += price*count
             singleOrder = SingleOrder(good = good, count = count)
             order_item.append(singleOrder)
-
+        print("order_item:",mlab.list2json(order_item))
         customer = Customer.objects().with_id(user_id)
         order = Order(items = order_item,customer = customer,
                       totalspend = total_spend)
