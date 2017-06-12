@@ -4,9 +4,9 @@ from model.customer import Customer
 import mlab
 from model.order import Order, SingleOrder
 import json
-
+import re
 parser = reqparse.RequestParser()
-parser.add_argument(name="items",type = list, location="json")
+parser.add_argument(name="items", location="json", action = "append")
 parser.add_argument(name="user_id", type=str, location="json")
 
 class OrderRes(Resource):
@@ -15,40 +15,28 @@ class OrderRes(Resource):
         return mlab.list2json(orders)
 
     def post(self):
+
         #parser.add_argument(name="id", type= int, location="json")
         #parser.add_argument(name="count", type=int, location="json")
+
         body = parser.parse_args()
         items = body["items"]
         user_id = body.user_id
         total_spend = 0
         order_item = []
-        print("body:", body)
-        print("items:", items)
-        print("user_id:", user_id)
-        #convert list to string
-        #str = ''.join(items)
-        #convert string to string acceptable list dict
-        #json_act_str = str.replace("'","\"")
-        #print("json_act_str", json_act_str)
-        # row_json = json.dumps(items)
-        # print("row_json:", row_json)
-        # items_json = json.loads(row_json)
-        # print("items_json:", items_json)
-        # print("items_json type", type(items_json))
-        # #list_dict = mlab.itemjson(json_act_str)
-        for item in items:
-            good_id = item["id"]
-            count = item["count"]
+        dumps = json.dumps(items)
+        ldumps = re.findall(r"[\w']+",dumps)
+        print(len(items))
+        for i in range(0,len(items)+1):
+            good_id = ldumps[4*i+1][1:-1]
+            count = int(ldumps[4*i+3])
             good = Good.objects().with_id(good_id)
             price = good.price
-            print("good_id:", good_id,";count: ",count,"price: ",price)
             total_spend += price*count
             singleOrder = SingleOrder(good = good, count = count)
             order_item.append(singleOrder)
-        customer = Customer.objects().with_id(user_id)
-        #print(mlab.item2json(order_item[0]))
-        #print("order_item0:",mlab.item2json(order_item[0]),"order_item1:",order_item[1])
 
+        customer = Customer.objects().with_id(user_id)
         order = Order(items = order_item,customer = customer,
                       totalspend = total_spend)
         order.save()
