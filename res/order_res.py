@@ -3,9 +3,10 @@ from model.good import *
 from model.customer import Customer
 import mlab
 from model.order import Order, SingleOrder
+import json
 
 parser = reqparse.RequestParser()
-parser.add_argument(name="items", location="json", action = "append")
+parser.add_argument(name="items",type = list, location="json")
 parser.add_argument(name="user_id", type=str, location="json")
 
 class OrderRes(Resource):
@@ -14,10 +15,8 @@ class OrderRes(Resource):
         return mlab.list2json(orders)
 
     def post(self):
-
         #parser.add_argument(name="id", type= int, location="json")
         #parser.add_argument(name="count", type=int, location="json")
-
         body = parser.parse_args()
         items = body["items"]
         user_id = body.user_id
@@ -27,17 +26,22 @@ class OrderRes(Resource):
         print("items:", items)
         print("user_id:", user_id)
         #convert list to string
-        str = ''.join(items)
+        #str = ''.join(items)
         #convert string to string acceptable list dict
-        json_act_str = str.replace("'","\"")
-        print("json_act_str", json_act_str)
-        list_dict = mlab.itemjson(json_act_str)
-        for i in range(0,len(list_dict)):
-            good_id = list_dict[i]["id"]
-            count = list_dict[i]["count"]
+        #json_act_str = str.replace("'","\"")
+        #print("json_act_str", json_act_str)
+        # row_json = json.dumps(items)
+        # print("row_json:", row_json)
+        # items_json = json.loads(row_json)
+        # print("items_json:", items_json)
+        # print("items_json type", type(items_json))
+        # #list_dict = mlab.itemjson(json_act_str)
+        for item in items:
+            good_id = item["id"]
+            count = item["count"]
             good = Good.objects().with_id(good_id)
             price = good.price
-            #print("good_id:", good_id,";count: ",count,"price: ",price)
+            print("good_id:", good_id,";count: ",count,"price: ",price)
             total_spend += price*count
             singleOrder = SingleOrder(good = good, count = count)
             order_item.append(singleOrder)
